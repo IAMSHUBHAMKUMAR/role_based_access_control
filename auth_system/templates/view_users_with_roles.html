@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Users with Roles</title>
+</head>
+<body>
+    <h1>Users with Roles</h1>
+    <form action="{% url 'assign_role' %}" method="get">
+        <button type="submit">Assign Role</button>
+    </form>
+    
+    <form action="{% url 'create_user_with_roles' %}" method="get">
+        <button type="submit">Create User with Roles</button>
+    </form>
+</body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Roles</th>
+                <th>Actions</th> <!-- New column for actions -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_with_roles in users_with_roles %}
+            <tr>
+                <td>{{ user_with_roles.user.username }}</td>
+                <td>
+                    {% if user_with_roles.roles %}
+                        <ul>
+                            {% for role in user_with_roles.roles %}
+                                <li>{{ role }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        No roles assigned
+                    {% endif %}
+                </td>
+                <td> <!-- Actions column -->
+                    <form action="{% url 'delete_user_role' user_with_roles.user.username %}" method="post">
+                        {% csrf_token %}
+                        {% for role in user_with_roles.roles %}
+                            <input type="hidden" name="role" value="{{ role }}">
+                            <button type="submit">Delete {{ role }}</button>
+                        {% endfor %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</html>

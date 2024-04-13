@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User with Roles</title>
+</head>
+<body>
+    <h1>Create User with Roles</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        <label for="roles">Roles:</label><br>
+        <input type="checkbox" id="read" name="roles" value="READ">
+        <label for="read">Read</label><br>
+        <input type="checkbox" id="write" name="roles" value="WRITE">
+        <label for="write">Write</label><br>
+        <input type="checkbox" id="delete" name="roles" value="DELETE">
+        <label for="delete">Delete</label><br>
+        <input type="submit" value="Create User">
+    </form>
+</body>
+</html>
